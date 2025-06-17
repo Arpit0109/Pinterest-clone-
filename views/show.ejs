@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="/stylesheet/profile.css" /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <style>
+    body {
+      height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+    nav {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      background-color: #262629;
+      padding: 40px;
+      font-family: sans-serif;
+    }
+    nav h1 {
+      font-size: 20px;
+      font-weight: 400;
+    }
+    #rightnav {
+      width: 20%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #rightnav #logout {
+      width: 70px;
+      background-color: red;
+      padding: 8px;
+      border-radius: 10px;
+    }
+    #rightnav a {
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+  </style>
+  <body>
+    <nav>
+      <div id="leftnav">
+        <h1>Pinterest</h1>
+      </div>
+      <div id="rightnav">
+        <a href="/profile"><h1>profile</h1></a>
+       <a href="/feed"><h1>feed</h1>
+        <a href="/logout"><h1 id="logout">logout</h1></a>
+      </div>
+    </nav>
+    <div class="w-full min-h-screen bg-zinc-800 px-10 py-8 text-white">
+      <div class="cards flex flex-wrap gap-10">
+        <% user.posts.forEach((post)=>{ %>
+
+        <a href="/PersonalPost/<%=post._id %>">
+          <div class="card w-32">
+            <div class="w-full h-40 bg-sky-200 rounded-md overflow-hidden">
+              <img
+                class="w-full h-full object-cover"
+                src="data:image/jpeg;base64,<%= post.image.toString('base64') %>"
+                alt=""
+              />
+            </div>
+            <h5 class="mt-2 text-sm"><%= post.tital %></h5>
+            <h6><%= user.date.toLocaleString() %></h6>
+          </div>
+        </a>
+        <% })%>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheet/profile.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <style>
+     body {
+      height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+    nav {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      background-color: #262629;
+      padding: 40px;
+      font-family: sans-serif;
+    }
+    nav h1{
+        font-size: 20px;
+      font-weight: 400;
+    }
+    #rightnav {
+      width: 20%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #rightnav #logout {
+      width: 70px;
+      background-color: red;
+      padding: 8px;
+      border-radius: 10px;
+    }
+    #rightnav a {
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+  </style>
+  <body>
+    <nav>
+      <div id="leftnav">
+        <h1>Pinterest</h1>
+      </div>
+      <div id="rightnav">
+        <a href="/profile"><h1>profile</h1></a>
+        <a href="/feed"><h1>feed</h1></a>
+        <a href="/logout"><h1 id="logout">logout</h1></a>
+      </div>
+    </nav>
+    <div id="profile">
+    <form id="uploadform" action="/uploadform" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" style="display: none">
+    </form>
+      <div id="profiledets">
+        <div id="profile-box">
+          <div id="profile-edit-icon">
+            <i id="uploadion" class="fa-solid fa-pen"></i>
+          </div>
+          <div id="imgbox">
+          <% if  (user.profileImg && user.profileImg.length>0) { %>
+
+            <img
+              src="data:image/jpeg;base64,<%= user.profileImg.toString('base64') %>"
+              alt=""
+            />
+          <% } %>
+
+          </div>
+        </div>
+        <h1><%= user.name %></h1>
+        <h3>@ <%= user.username %></h3>
+        <a id="editbtn" href="/edit"> edit</a>
+        <a href="/add"><button>Add new image</button></a>
+      </div>
+      <div id="cards">
+        <div class="eachcard">
+          <% if (user.posts.length>0) { %>
+           <a href="/show/posts">
+             <div class="card">
+            <img
+              src="data:image/jpeg;base64,<%= user.posts[0].image.toString('base64') %>"
+              alt=""
+            />
+          </div>
+           </a>
+          <h3>yours Pins</h3>
+          <h5><%=user.posts.length %> pins</h5>
+          <% } %>
+        </div>
+        
+      </div>
+    </div>
+  </body>
+  <script>
+    document.querySelector("#uploadion").addEventListener("click",()=>{
+      document.querySelector("#uploadform input").click();
+    })
+    document.querySelector("#uploadform input").addEventListener("change",()=>{
+      document.querySelector("#uploadform").submit();
+    })
+
+  </script>
+</html>
