@@ -8,6 +8,7 @@ const upload = require("./multer");
 const userModel = require("./user");
 const postmodel = require("./postModel");
 const { render } = require("ejs");
+const Fuse = require("fuse.js");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -106,7 +107,7 @@ router.post("/register", async (req, res) => {
       res.redirect("/register");
     }
   } catch (error) {
-    res.send(error.message)
+    res.send(error.message);
   }
 });
 
@@ -115,22 +116,21 @@ router.post("/login", async (req, res) => {
   let user = await userModel.findOne({ email });
 
   try {
-      if (user) {
-    bcrypt.compare(password, user.password, function (err, result) {
-      if (result) {
-        let token = jwt.sign({ email }, "shhhhh");
-        res.cookie("token", token);
-        res.redirect("/profile");
-      } else {
-        res.redirect("/");
-      }
-    });
-  } else {
-    res.redirect("/");
-  }
+    if (user) {
+      bcrypt.compare(password, user.password, function (err, result) {
+        if (result) {
+          let token = jwt.sign({ email }, "shhhhh");
+          res.cookie("token", token);
+          res.redirect("/profile");
+        } else {
+          res.redirect("/");
+        }
+      });
+    } else {
+      res.redirect("/");
+    }
   } catch (error) {
-    res.send(error.message)
-    
+    res.send(error.message);
   }
 });
 
@@ -169,25 +169,21 @@ router.post(
 router.get("/SearchUser", islogedIn, async (req, res) => {
   const name = req.query.name.trim();
 
-  const user = await userModel
-    .findOne({
-      name: { $regex: `^${name}$`, $options: "i" },
-    })
-    .select("-password");
-  if (!user) {
-    res.send("user not exit");
-  }
+  const Fuse = require("fuse.js");
+  const allUsers = await userModel.find().select("-password").populate("posts");
 
-  const posts = await postmodel.find({ user: user._id }).populate("user");
+  const options = {
+    keys: ["name"],
+    threshold: 0.4,
+  };
 
-  res.render("SearchUser", { posts });
+  const fuse = new Fuse(allUsers, options);
 
-  //   let allPosts = [];
-  // for (let user of users) {
-  //   const posts = await postmodel.find({ user: user._id }).populate("user");
-  //   allPosts.push(...posts);
-  //   res.render("SearchUser", { posts });
-  // }
+  const results = fuse.search(name);
+
+  const matchedUsers = results.map((result) => result.item);
+
+  res.render("SearchUser", { user: matchedUsers });
 });
 
 async function islogedIn(req, res, next) {

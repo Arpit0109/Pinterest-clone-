@@ -3,42 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-body {
-  height: 100vh;
-  width: 100vw;
-  overflow-x: hidden;
-}
-nav{
-  width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-  background-color: #262629;
-  padding: 40px;
-  font-family: sans-serif;
-}
-#rightnav{
-  width: 15%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 400;
-  font-size: 11px;
-}
- #rightnav #logout{
-  width: 70px;
-  background-color: red;
-  padding: 8px;
-  border-radius: 10px;
-}
-#rightnav a{
-  text-align: center;
-  text-decoration: none;
-  color: #fff;
-}
 #profile {
   min-height: 100vh;
   width: 100vw;
@@ -47,6 +11,8 @@ nav{
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 #profile-box {
@@ -62,13 +28,13 @@ nav{
   right: 0;
   bottom: 0;
 }
-#profile-edit-icon i{
+
+#profile-edit-icon i {
   font-size: 15px;
   color: #000;
 }
 
 #profiledets {
-  /* margin-top: 50px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,8 +42,8 @@ nav{
   padding: 20px;
   border-radius: 8px;
   gap: 5px;
+  text-align: center;
 }
-
 
 #imgbox {
   height: 130px;
@@ -86,7 +52,6 @@ nav{
   background-color: white;
   overflow: hidden;
   border: 2px solid white;
-
 }
 
 #imgbox img {
@@ -101,34 +66,42 @@ nav{
   color: #fff;
   text-decoration: none;
   background-color: #403F46;
-  width: 70px;
+  width: 100px;
   padding: 9px;
   border-radius: 20px;
   margin-bottom: 10px;
+  font-weight: 500;
 }
 
 button {
   background-color: #B81B1B;
-  padding: 12px;
+  padding: 12px 20px;
   color: #fff;
   border-radius: 10px;
   font-weight: 700;
+  border: none;
+  cursor: pointer;
 }
 
 #cards {
-  height: 100%;
   width: 100%;
-  padding: 40px;
+  padding: 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 20px;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
-.eachcard {}
+.eachcard {
+  max-width: 200px;
+  width: 100%;
+  text-align: center;
+}
 
 .card {
-  height: 150px;
-  width: 200px;
+  width: 100%;
+  aspect-ratio: 4/3;
   background-color: #fff;
   border-radius: 15px;
   overflow: hidden;
@@ -143,8 +116,50 @@ button {
 .eachcard h3 {
   margin-top: 8px;
   font-weight: 700;
+  font-size: 16px;
+  color: #fff;
 }
 
 .eachcard h5 {
   font-weight: 300;
+  font-size: 13px;
+  color: #ccc;
+}
+
+@media (max-width: 768px) {
+  #cards {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+  }
+
+  .eachcard {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  #imgbox {
+    height: 100px;
+    width: 100px;
+  }
+
+  #profile-edit-icon {
+    padding: 6px;
+    right: 4px;
+    bottom: 4px;
+  }
+
+  #profile-edit-icon i {
+    font-size: 12px;
+  }
+
+  #profiledets #editbtn {
+    width: 80px;
+    padding: 7px;
+  }
+
+  .card {
+    aspect-ratio: 4/3;
+  }
 }

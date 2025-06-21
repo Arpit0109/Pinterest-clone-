@@ -72,9 +72,9 @@
                 alt=""
               />
             </div>
-            <h5 class="mt-2 text-sm"><%= post.tital %></h5>
-            <h6><%= user.date.toLocaleString() %></h6>
-          </div>
+            <h5 class="mt-2 text-sm font-medium truncate"><%= post.tital %></h5>
+          <h6 class="text-xs text-zinc-400 mt-1"><%= user.date.toLocaleString() %></h6>
+       </div>
         </a>
         <% })%>
       </div>
